@@ -1,118 +1,60 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
+import DocumentPicker from 'react-native-document-picker';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+// DocumentPicker: may aik method hota hay 'pick' ka, ya hamara file file manager khol deta hay jaha say hum document ko pick kr saktay hay.
+// ... DocumentPicker: may error a saktay is leyee hum isay 'try catch' may rakhain gay. 
+// ... DocumentPicker: error catch krnay ka bhi specific method deta hay 'isCancel' 
+// ... isCancel: without uploading cancel krdeya yaha wo error ayee ga.
+// ... iger aisa nhi hay to 'else' wala error display krwa dain gay.
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+// pick: kay ander phla option hota hay type ka, yani kay kis type kay document mughay allow krnay hay.
+// allowMultipleSelection: true: ka matlab hay k aik waqt may aik types ki bohat sari file upload kr saktay hay.
+// .pickSingle: ya sirf hamari single file hi upload krwata hay.
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+export default function App():JSX.Element {
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  const selectDoc = async () => {
+    try {
+      const doc = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images],
+        allowMultiSelection: true
+      });
+       
+      // for single upload
+        //  const doc = await DocumentPicker.pickSingle({
+        //   type: [DocumentPicker.types.images],
+        // })
+      console.log(doc)
+    } catch(err) {
+      if(DocumentPicker.isCancel(err)) 
+        console.log("User cancelled the upload", err);
+      else 
+        console.log(err)
+    }
+  }
+
   return (
-    <View style={styles.sectionContainer}>
+    <View>
       <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
+        style={styles.text}>
+        Document Picker
       </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+      <View style={styles.button}>
+        <Button title="Select Document" onPress={selectDoc} />
+      </View>
     </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  button: {
+    marginHorizontal: 40
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
+  text: {
+    color: 'black',
+          fontSize: 28,
+          textAlign: 'center',
+          marginVertical: 40,
+  }
+})

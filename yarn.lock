@@ -7928,6 +7928,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-document-picker@npm:^9.3.0":
+  version: 9.3.0
+  resolution: "react-native-document-picker@npm:9.3.0"
+  dependencies:
+    invariant: ^2.2.4
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-windows: "*"
+  peerDependenciesMeta:
+    react-native-windows:
+      optional: true
+  checksum: 622c9bd3a17b7b92ff6b13571ccf2a916dd2477f2aa8c22b79e4b204156742ba95680dea912ee5ee56718f13c537107f5937e5bcf88d93cdf2142d508dc16351
+  languageName: node
+  linkType: hard
+
 "react-native@npm:0.74.3":
   version: 0.74.3
   resolution: "react-native@npm:0.74.3"
@@ -8041,6 +8057,7 @@ __metadata:
     prettier: 2.8.8
     react: 18.2.0
     react-native: 0.74.3
+    react-native-document-picker: ^9.3.0
     react-test-renderer: 18.2.0
     typescript: 5.0.4
   languageName: unknown
